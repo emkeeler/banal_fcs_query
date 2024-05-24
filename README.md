@@ -1,6 +1,8 @@
-# banal_fcs_query
+# ΔFCS sequencing analysis
 
-## index amplicon sequencing using Bowtie2 (v2.5.1, GCC-12.2.0)
+SARS-CoV-2 ΔFCS sequencing analysis for "SARS-CoV-2-related bat viruses evade human intrinsic immunity but lack efficient transmission capacity" by Peña-Hernández et al. (2024)
+
+## Index amplicon sequencing using Bowtie2 (v2.5.1, GCC-12.2.0)
 ```
 bowtie2-build amplicon.fna amplicon_index
 ```
