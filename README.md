@@ -8,7 +8,7 @@ bowtie2-build amplicon.fna amplicon_index
 ```
 amplicon.fna contains the nucleotide sequence of the amplicon spanning the FCS (corresponding to ARTIC primers SARS-CoV-2_400_77_RIGHT_0 and SARS-CoV-2_400_77_LEFT_0)
 
-## align reads to amplicon using Bowtie2 (v2.5.1, GCC-12.2.0)
+## Align reads to amplicon using Bowtie2 (v2.5.1, GCC-12.2.0)
 ```
 bowtie2 -q --local -t --very-sensitive-local --no-mixed --no-discordant -x amplicon_index \
         -1 /path/to/sample_R1.fastq.gz \
@@ -16,29 +16,29 @@ bowtie2 -q --local -t --very-sensitive-local --no-mixed --no-discordant -x ampli
 	-S /path/to/sample_align.sam
 ```
 
-## convert alignments from SAM to BAM format using Samtools (v1.18, GCC-12.2.0)
+## Convert alignments from SAM to BAM format using Samtools (v1.18, GCC-12.2.0)
 ```
 samtools view -bS /path/to/sample_align.sam > /path/to/sample_align.bam
 ```
 
-## filter out non-mapping reads using Samtools (v1.18, GCC-12.2.0)
+## Filter out non-mapping reads using Samtools (v1.18, GCC-12.2.0)
 ```
 samtools view -b -F 4 /path/to/sample_align.bam > /path/to/sample_mapped.bam
 ```
 
-## extract nucleotide sequences from mapping reads BAM file using Samtools (v1.18, GCC-12.2.0)
+## Extract nucleotide sequences from mapping reads BAM file using Samtools (v1.18, GCC-12.2.0)
 ```
 samtools view /path/to/sample_mapped.bam | cut -f 10 > /path/to/sample_mapped_extracted.txt
 ```
 each line in sample_mapped_extracted.txt corresponds to a single read
 
-## filter out mapping reads lacking conserved FCS flanking sites
+## Filter out mapping reads lacking conserved FCS flanking sites
 ```
 grep 'GACTCA' /path/to/sample_mapped_extracted.txt | grep 'CAATCC' /path/to/sample_mapped_extracted.txt > /path/to/sample_mapped_extracted_flank.txt
 ```
 both sites must be present for reads to pass this filter step
 
-## count number of remaining reads containing FCS sequence  
+## Count number of remaining reads containing FCS sequence  
 ```
 grep -c "TCTCCTCGGCGGGCACGT" /path/to/sample_mapped_extracted_flank.txt
 wc -l /path/to/sample_mapped_extracted_flank.txt
